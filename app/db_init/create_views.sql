@@ -33,10 +33,42 @@
 -- JOIN suppliers s    ON p.SupplierID = s.SupplierID
 -- JOIN shippers sh    ON o.ShipVia = sh.ShipperID;
 
-
+-- CREATE VIEW IF NOT EXISTS OrderDetailsExtended AS
+-- SELECT CustomerID,
+--       CompanyName,
+--       Region
+--       FROM customers
 
 CREATE VIEW IF NOT EXISTS OrderDetailsExtended AS
-SELECT CustomerID,
-      CompanyName,
-      Region
-      FROM customers
+SELECT
+    o.OrderID,
+    o.OrderDate,
+    o.RequiredDate,
+    o.ShippedDate,
+    o.Freight,
+    o.ShipName,
+    o.ShipAddress,
+    o.ShipCity,
+    o.ShipRegion,
+    o.ShipPostalCode,
+    o.ShipCountry,
+    c.CustomerID,
+    c.CompanyName,
+    c.ContactName,
+    c.ContactTitle,
+    c.Address AS CustomerAddress,
+    c.City AS CustomerCity,
+    c.Region AS CustomerRegion,
+    c.PostalCode AS CustomerPostalCode,
+    c.Country,          -- keep original name
+    c.Phone AS CustomerPhone,
+    c.Fax AS CustomerFax
+FROM Orders o
+JOIN Customers c ON o.CustomerID = c.CustomerID;
+
+
+-- CREATE VIEW IF NOT EXISTS OrderDetailsExtended AS
+-- SELECT CustomerID,
+--       CompanyName,
+--       Region
+--       FROM customers
